@@ -30,17 +30,17 @@ def connectionLoop(sock):
             for c in clients:
                player = {}
                player['id'] = str(c)
-               message['player'].append(player)
+               newMessage['player'].append(player)
 
             m = json.dumps(message)
             m2 = json.dumps(newMessage)
-            clients_lock.acquire()
+            #clients_lock.acquire()
             for c in clients:
                if c == addr:
                   sock.sendto(bytes(m,'utf8'), (c[0],c[1]))
                else:
-                  sock.sendto(bytes(m2, 'utf8'), (c))
-            clients_lock.release() 
+                  sock.sendto(bytes(m2, 'utf8'), (c[0],c[1]))
+            #clients_lock.release() 
 
 def cleanClients(sock):
    while True:
@@ -57,7 +57,7 @@ def cleanClients(sock):
             clients_lock.release()
       
       if (message.get("player") != []):
-         message = json.dumps(message)
+         m = json.dumps(message)
          clients_lock.acquire()
          for c in clients:
             sock.sendto(bytes(m,'utf8'), (c[0],c[1]))
@@ -84,7 +84,7 @@ def gameLoop(sock):
       clients_lock.release()
       time.sleep(1)
    
-def main(sock):
+def main():
    port = 12345
    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
    s.bind(('', port))
