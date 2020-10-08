@@ -9,7 +9,7 @@ If a client does not send a heartbeat at least once every 5 seconds. The server 
 
 `mkdir labs` or `cd labs`
 
-`git clone https://github.com/galalmounir/udpSocketServer.git`
+`git clone https://github.com/ShadowOracle19/udpSocketServer.git`
 
 `cd udpSocketServer`
 
